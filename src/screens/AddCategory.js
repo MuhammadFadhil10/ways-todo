@@ -8,6 +8,7 @@ import {
 	Text,
 	Button,
 	Input,
+	VStack,
 } from 'native-base';
 import { PrimaryButton } from '../components/Button';
 
@@ -17,10 +18,10 @@ export const AddCategory = () => {
 			<Text fontSize={'4xl'} fontWeight='bold'>
 				Add Category
 			</Text>
-			<Center mb={20}>
+			<VStack mb={20} mt={10} space={5}>
 				<Input placeholder='Name' />
 				<PrimaryButton color='orange' btnName='Add Category' />
-			</Center>
+			</VStack>
 			<Text fontSize={'4xl'} fontWeight='bold'>
 				List Category
 			</Text>
