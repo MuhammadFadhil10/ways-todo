@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
 	Box,
 	Text,
@@ -6,6 +7,10 @@ import {
 	Input,
 	VStack,
 	Pressable,
+	Alert,
+	HStack,
+	IconButton,
+	CloseIcon,
 } from 'native-base';
 import * as React from 'react';
 
@@ -13,14 +18,88 @@ import loginIcon from '../assets/images/login-image.png';
 import { PrimaryButton } from '../components/Button';
 
 export const Login = ({ navigation }) => {
+	const [isLoading, setIsLoading] = React.useState(false);
+	const [message, setMessage] = React.useState('');
+	const [loginStatus, setLoginStatus] = React.useState('');
 
-    
+	const [form, setForm] = React.useState({
+		email: '',
+		password: '',
+	});
 
+	const handleChange = (name, targetValue) => {
+		setForm({
+			...form,
+			[name]: targetValue,
+		});
+	};
+
+	const handleLogin = async () => {
+		try {
+			setIsLoading(true);
+			const response = await axios.post(
+				'https://api.kontenbase.com/query/api/v1/8dde74b0-7698-4344-9eca-76516944f6c1/auth/login',
+				form
+			);
+			setIsLoading(false);
+			setLoginStatus('success');
+			setMessage('Success Login!');
+			setTimeout(() => {
+				setMessage('');
+				setForm({
+					...form,
+					email: '',
+					password: '',
+				});
+				navigation.navigate('ListTodo');
+			}, 1000);
+		} catch (error) {
+			console.log(error);
+			setLoginStatus('failed');
+			setIsLoading(false);
+			setMessage('Email or Password wrong!');
+			setTimeout(() => {
+				setMessage('');
+				setForm({
+					...form,
+					email: '',
+					password: '',
+				});
+			}, 1000);
+			throw error;
+		}
+	};
 
 	return (
 		<Box mt={20}>
-			{/* <Center style={{ display: 'flex' }}> */}
 			<VStack alignItems='center' space={10}>
+				{message != '' && (
+					<Alert
+						w='100%'
+						status={loginStatus === 'success' ? 'success' : 'error'}
+					>
+						<VStack space={2} flexShrink={1} w='100%'>
+							<HStack flexShrink={1} space={2} justifyContent='space-between'>
+								<HStack space={2} flexShrink={1}>
+									<Alert.Icon mt='1' />
+									<Text fontSize='md' color='coolGray.800'>
+										{message}
+									</Text>
+								</HStack>
+								<IconButton
+									variant='unstyled'
+									_focus={{
+										borderWidth: 0,
+									}}
+									icon={<CloseIcon size='3' />}
+									_icon={{
+										color: 'coolGray.600',
+									}}
+								/>
+							</HStack>
+						</VStack>
+					</Alert>
+				)}
 				<Image source={loginIcon} alt='login image' />
 				<Box width={310}>
 					<Text bold fontSize={'4xl'} alignSelf='flex-start'>
@@ -29,12 +108,23 @@ export const Login = ({ navigation }) => {
 				</Box>
 				<Box width={310}>
 					<VStack space={5}>
-						<Input placeholder='Email'></Input>
-						<Input placeholder='Password'></Input>
+						<Input
+							placeholder='Email'
+							onChangeText={(e) => handleChange('email', e)}
+						></Input>
+						<Input
+							placeholder='Password'
+							onChangeText={(e) => handleChange('password', e)}
+						></Input>
 					</VStack>
 				</Box>
 				<Box alignItems='center'>
-					<PrimaryButton btnName='Login' color='orange' />
+					<PrimaryButton
+						btnName='Login'
+						color='orange'
+						isLoading={isLoading}
+						onPress={() => handleLogin()}
+					/>
 					<Text>
 						New Users ?{' '}
 						<Pressable onPress={() => navigation.navigate('Register')}>

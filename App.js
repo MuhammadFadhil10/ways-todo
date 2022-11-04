@@ -102,7 +102,7 @@ export default function App() {
 						}}
 					/>
 					<Stack.Screen
-						name='Home'
+						name='ListTodo'
 						component={ListTodo}
 						options={{
 							title: 'List To Do',
