@@ -11,6 +11,7 @@ import {
 	HStack,
 	IconButton,
 	CloseIcon,
+	ScrollView,
 } from 'native-base';
 import * as React from 'react';
 
@@ -44,15 +45,15 @@ export const Login = ({ navigation }) => {
 			setIsLoading(false);
 			setLoginStatus('success');
 			setMessage('Success Login!');
-			setTimeout(() => {
-				setMessage('');
-				setForm({
-					...form,
-					email: '',
-					password: '',
-				});
-				navigation.navigate('ListTodo');
-			}, 1000);
+			// setTimeout(() => {
+			setMessage('');
+			setForm({
+				...form,
+				email: '',
+				password: '',
+			});
+			navigation.navigate('ListTodo');
+			// }, 100);
 		} catch (error) {
 			console.log(error);
 			setLoginStatus('failed');
@@ -60,83 +61,82 @@ export const Login = ({ navigation }) => {
 			setMessage('Email or Password wrong!');
 			setTimeout(() => {
 				setMessage('');
-				setForm({
-					...form,
-					email: '',
-					password: '',
-				});
 			}, 1000);
 			throw error;
 		}
 	};
 
 	return (
-		<Box mt={20}>
-			<VStack alignItems='center' space={10}>
-				{message != '' && (
-					<Alert
-						w='100%'
-						status={loginStatus === 'success' ? 'success' : 'error'}
-					>
-						<VStack space={2} flexShrink={1} w='100%'>
-							<HStack flexShrink={1} space={2} justifyContent='space-between'>
-								<HStack space={2} flexShrink={1}>
-									<Alert.Icon mt='1' />
-									<Text fontSize='md' color='coolGray.800'>
-										{message}
-									</Text>
+		<ScrollView>
+			<Box mt={20}>
+				<VStack alignItems='center' space={10}>
+					{message != '' && (
+						<Alert
+							w='100%'
+							status={loginStatus === 'success' ? 'success' : 'error'}
+						>
+							<VStack space={2} flexShrink={1} w='100%'>
+								<HStack flexShrink={1} space={2} justifyContent='space-between'>
+									<HStack space={2} flexShrink={1}>
+										<Alert.Icon mt='1' />
+										<Text fontSize='md' color='coolGray.800'>
+											{message}
+										</Text>
+									</HStack>
+									<IconButton
+										variant='unstyled'
+										_focus={{
+											borderWidth: 0,
+										}}
+										icon={<CloseIcon size='3' />}
+										_icon={{
+											color: 'coolGray.600',
+										}}
+									/>
 								</HStack>
-								<IconButton
-									variant='unstyled'
-									_focus={{
-										borderWidth: 0,
-									}}
-									icon={<CloseIcon size='3' />}
-									_icon={{
-										color: 'coolGray.600',
-									}}
-								/>
-							</HStack>
+							</VStack>
+						</Alert>
+					)}
+					<Image source={loginIcon} alt='login image' />
+					<Box width={310}>
+						<Text bold fontSize={'4xl'} alignSelf='flex-start'>
+							Login
+						</Text>
+					</Box>
+					<Box width={310}>
+						<VStack space={5}>
+							<Input
+								placeholder='Email'
+								value={form.email}
+								onChangeText={(e) => handleChange('email', e)}
+							></Input>
+							<Input
+								placeholder='Password'
+								value={form.password}
+								onChangeText={(e) => handleChange('password', e)}
+							></Input>
 						</VStack>
-					</Alert>
-				)}
-				<Image source={loginIcon} alt='login image' />
-				<Box width={310}>
-					<Text bold fontSize={'4xl'} alignSelf='flex-start'>
-						Login
-					</Text>
-				</Box>
-				<Box width={310}>
-					<VStack space={5}>
-						<Input
-							placeholder='Email'
-							onChangeText={(e) => handleChange('email', e)}
-						></Input>
-						<Input
-							placeholder='Password'
-							onChangeText={(e) => handleChange('password', e)}
-						></Input>
-					</VStack>
-				</Box>
-				<Box alignItems='center'>
-					<PrimaryButton
-						btnName='Login'
-						color='orange'
-						isLoading={isLoading}
-						onPress={() => handleLogin()}
-					/>
-					<Text>
-						New Users ?{' '}
-						<Pressable onPress={() => navigation.navigate('Register')}>
-							<Text bold color='#FF5555'>
-								{' '}
-								Register
-							</Text>
-						</Pressable>
-					</Text>
-				</Box>
-			</VStack>
-			{/* </Center> */}
-		</Box>
+					</Box>
+					<Box alignItems='center'>
+						<PrimaryButton
+							btnName='Login'
+							color='orange'
+							isLoading={isLoading}
+							onPress={() => handleLogin()}
+						/>
+						<Text>
+							New Users ?{' '}
+							<Pressable onPress={() => navigation.navigate('Register')}>
+								<Text bold color='#FF5555'>
+									{' '}
+									Register
+								</Text>
+							</Pressable>
+						</Text>
+					</Box>
+				</VStack>
+				{/* </Center> */}
+			</Box>
+		</ScrollView>
 	);
 };
