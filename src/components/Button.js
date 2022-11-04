@@ -5,7 +5,7 @@ import { StyleSheet } from 'react-native';
 
 
 
-export const PrimaryButton = ({ btnName, onClick, color }) => {
+export const PrimaryButton = ({ btnName, onPress, color }) => {
 	const styles = StyleSheet.create({
 		button: {
 			backgroundColor: color === 'orange' ? '#FF5555' : '#0000004F',
@@ -16,7 +16,7 @@ export const PrimaryButton = ({ btnName, onClick, color }) => {
 	});
 
 	return (
-		<Button style={styles.button} marginBottom={5}>
+		<Button style={styles.button} marginBottom={5} onPress={onPress}>
 			<Text bold fontSize={16}>{btnName}</Text>
 		</Button>
 	);

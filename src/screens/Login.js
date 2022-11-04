@@ -1,10 +1,18 @@
-import { Box, Text, Center, Image, Input, VStack } from 'native-base';
+import {
+	Box,
+	Text,
+	Center,
+	Image,
+	Input,
+	VStack,
+	Pressable,
+} from 'native-base';
 import * as React from 'react';
 
 import loginIcon from '../assets/images/login-image.png';
 import { PrimaryButton } from '../components/Button';
 
-export const Login = () => {
+export const Login = ({ navigation }) => {
 	const gap = 10;
 	return (
 		<Box mt={20}>
@@ -26,10 +34,12 @@ export const Login = () => {
 					<PrimaryButton btnName='Login' color='orange' />
 					<Text>
 						New Users ?{' '}
-						<Text bold color='#FF5555'>
-							{' '}
-							Register
-						</Text>
+						<Pressable onPress={() => navigation.navigate('Register')}>
+							<Text bold color='#FF5555'>
+								{' '}
+								Register
+							</Text>
+						</Pressable>
 					</Text>
 				</Box>
 			</VStack>

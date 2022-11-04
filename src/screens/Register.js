@@ -8,14 +8,15 @@ import {
 	ScrollView,
 } from 'native-base';
 import * as React from 'react';
+import { TouchableOpacity } from 'react-native';
 
 import registerIcon from '../assets/images/login-image.png';
 import { PrimaryButton } from '../components/Button';
 
-export const Register = () => {
+export const Register = ({ navigation }) => {
 	const gap = 10;
 	return (
-		<ScrollView  >
+		<ScrollView>
 			<Box mt={20}>
 				{/* <Center style={{ display: 'flex' }}> */}
 				<VStack alignItems='center' space={10}>
@@ -36,10 +37,12 @@ export const Register = () => {
 						<PrimaryButton btnName='Register' color='orange' />
 						<Text>
 							Joined us Before ?{' '}
-							<Text bold color='#FF5555'>
-								{' '}
-								Login
-							</Text>
+							<TouchableOpacity onPress={() => navigation.navigate("Login")} >
+								<Text bold color='#FF5555'>
+									{' '}
+									Login
+								</Text>
+							</TouchableOpacity>
 						</Text>
 					</Box>
 				</VStack>
