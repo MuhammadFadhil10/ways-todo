@@ -8,7 +8,7 @@ import { PrimaryButton } from '../components/Button';
 export const Main = ({ navigation }) => {
 	return (
 		<ScrollView>
-			<Box mt={20} >
+			<Box mt={20}>
 				<Center>
 					<Image
 						source={homeImage}

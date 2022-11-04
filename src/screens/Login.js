@@ -13,7 +13,10 @@ import loginIcon from '../assets/images/login-image.png';
 import { PrimaryButton } from '../components/Button';
 
 export const Login = ({ navigation }) => {
-	const gap = 10;
+
+    
+
+
 	return (
 		<Box mt={20}>
 			{/* <Center style={{ display: 'flex' }}> */}

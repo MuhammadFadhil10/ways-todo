@@ -1,11 +1,9 @@
 import * as React from 'react';
 
-import { Button, Text } from 'native-base';
+import { Button, Spinner, Text } from 'native-base';
 import { StyleSheet } from 'react-native';
 
-
-
-export const PrimaryButton = ({ btnName, onPress, color }) => {
+export const PrimaryButton = ({ btnName, onPress, color, isLoading }) => {
 	const styles = StyleSheet.create({
 		button: {
 			backgroundColor: color === 'orange' ? '#FF5555' : '#0000004F',
@@ -17,7 +15,13 @@ export const PrimaryButton = ({ btnName, onPress, color }) => {
 
 	return (
 		<Button style={styles.button} marginBottom={5} onPress={onPress}>
-			<Text bold fontSize={16}>{btnName}</Text>
+			{isLoading ? (
+				<Spinner accessibilityLabel='Loading posts' size='lg' />
+			) : (
+				<Text bold fontSize={16}>
+					{btnName}
+				</Text>
+			)}
 		</Button>
 	);
 };
