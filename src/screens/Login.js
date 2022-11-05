@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {
 	Box,
@@ -42,10 +43,13 @@ export const Login = ({ navigation }) => {
 				'https://api.kontenbase.com/query/api/v1/8dde74b0-7698-4344-9eca-76516944f6c1/auth/login',
 				form
 			);
+
+			console.log(response.data.user._id);
+			await AsyncStorage.setItem('token', response.data.token);
+			await AsyncStorage.setItem('id', response.data.user._id);
 			setIsLoading(false);
 			setLoginStatus('success');
 			setMessage('Success Login!');
-			// setTimeout(() => {
 			setMessage('');
 			setForm({
 				...form,
@@ -53,7 +57,6 @@ export const Login = ({ navigation }) => {
 				password: '',
 			});
 			navigation.navigate('ListTodo');
-			// }, 100);
 		} catch (error) {
 			console.log(error);
 			setLoginStatus('failed');

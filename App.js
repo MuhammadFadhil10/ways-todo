@@ -41,26 +41,31 @@ const Tab = createBottomTabNavigator();
 const TabNav = () => {
 	return (
 		<Tab.Navigator
-			initialRouteName='Home'
 			screenOptions={({ route }) => ({
 				headerShown: false,
+				tabBarLabel: () => {
+					return null;
+				},
 				tabBarIcon: ({ focused, color, size }) => {
 					let iconName;
-					if (route.name === 'Home') {
+					if (route.name === 'ListTodo') {
 						iconName = focused ? 'home' : 'home-outline';
+					} else if (route.name === 'AddList') {
+						iconName = focused ? 'add-circle' : 'add-circle-outline';
+					} else if (route.name === 'AddCategory') {
+						iconName = focused ? 'bookmark' : 'bookmark-outline';
 					}
-					// else if (route.name === 'Login') {
-					// 	iconName = focused ? 'login' : 'login';
-					// }
 
-					return <Ionicons name={iconName} size={20} color='orange' />;
+					return <Ionicons name={iconName} size={20} color='#FF5555' />;
 				},
 				tabBarActiveTintColor: 'red',
 				tabBarInactiveTintColor: 'blue',
 			})}
 		>
-			<Tab.Screen name='Home' component={Main} />
-			<Tab.Screen name='Login' component={Login} />
+			{/* <Tab.Screen name='Main' component={Main}  /> */}
+			<Tab.Screen name='ListTodo' component={ListTodo} />
+			<Tab.Screen name='AddList' component={AddList} />
+			<Tab.Screen name='AddCategory' component={AddCategory} />
 		</Tab.Navigator>
 	);
 };
@@ -70,13 +75,13 @@ export default function App() {
 		<NativeBaseProvider>
 			<NavigationContainer>
 				<Stack.Navigator>
-					<Stack.Screen
+					{/* <Stack.Screen
 						name='*'
 						component={TabNav}
 						options={{
 							headerShown: false,
 						}}
-					/>
+					/> */}
 					<Stack.Screen
 						name='Main'
 						component={Main}
@@ -103,9 +108,10 @@ export default function App() {
 					/>
 					<Stack.Screen
 						name='ListTodo'
-						component={ListTodo}
+						component={TabNav}
 						options={{
 							title: 'List To Do',
+							headerShown: false,
 						}}
 					/>
 					<Stack.Screen
