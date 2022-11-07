@@ -40,13 +40,14 @@ export const Login = ({ navigation }) => {
 		try {
 			setIsLoading(true);
 			const response = await axios.post(
-				'https://api.kontenbase.com/query/api/v1/8dde74b0-7698-4344-9eca-76516944f6c1/auth/login',
+				'https://api.v2.kontenbase.com/query/api/v1/8dde74b0-7698-4344-9eca-76516944f6c1/auth/login',
 				form
 			);
 
 			console.log(response.data.user._id);
 			await AsyncStorage.setItem('token', response.data.token);
 			await AsyncStorage.setItem('id', response.data.user._id);
+			await AsyncStorage.setItem('user_name', response.data.user.firstName);
 			setIsLoading(false);
 			setLoginStatus('success');
 			setMessage('Success Login!');

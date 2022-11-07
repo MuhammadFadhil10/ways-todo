@@ -25,6 +25,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
+import DetailList from './src/screens/DetailList';
 
 // Define the config
 const config = {
@@ -126,6 +127,14 @@ export default function App() {
 						component={AddCategory}
 						options={{
 							title: 'Add Category',
+						}}
+					/>
+					<Stack.Screen
+						name='Detail'
+						component={DetailList}
+						options={{
+							title: 'Detail List',
+							headerShown: false,
 						}}
 					/>
 				</Stack.Navigator>

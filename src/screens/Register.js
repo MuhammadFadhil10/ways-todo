@@ -41,7 +41,7 @@ export const Register = ({ navigation }) => {
 			console.log(form);
 			setIsLoading(true);
 			const response = await axios.post(
-				'https://api.kontenbase.com/query/api/v1/8dde74b0-7698-4344-9eca-76516944f6c1/auth/register',
+				'https://api.v2.kontenbase.com/query/api/v1/8dde74b0-7698-4344-9eca-76516944f6c1/auth/register',
 				form
 			);
 			setIsLoading(false);

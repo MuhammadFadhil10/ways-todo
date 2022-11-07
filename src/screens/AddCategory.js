@@ -37,10 +37,18 @@ export const AddCategory = () => {
 
 	const getCategory = async () => {
 		try {
+			const token = await AsyncStorage.getItem('token');
+			const id = await AsyncStorage.getItem('id');
 			setCategoryLoading(true);
 			const response = await axios.get(
-				'https://api.kontenbase.com/query/api/v1/8dde74b0-7698-4344-9eca-76516944f6c1/category'
+				`https://api.v2.kontenbase.com/query/api/v1/8dde74b0-7698-4344-9eca-76516944f6c1/Category?user_id=${id}`,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
 			);
+			console.log(response);
 			setCategoryLoading(false);
 			setCategories(response.data);
 		} catch (error) {
@@ -55,14 +63,15 @@ export const AddCategory = () => {
 	}, []);
 
 	const handleAddCategory = async () => {
-		const token = await AsyncStorage.getItem('token');
-		const id = await AsyncStorage.getItem('id');
 		try {
-			setForm({ ...form, user_id: id });
+			const token = await AsyncStorage.getItem('token');
+			// const id = await AsyncStorage.getItem('id');
+			// setForm({ ...form, user_id: id });
 			console.log(form);
+			console.log(token);
 			setIsLoading(true);
 			const response = await axios.post(
-				`https://api.kontenbase.com/query/api/v1/8dde74b0-7698-4344-9eca-76516944f6c1/category`,
+				`https://api.v2.kontenbase.com/query/api/v1/8dde74b0-7698-4344-9eca-76516944f6c1/Category`,
 				form,
 				{
 					headers: {
@@ -76,6 +85,7 @@ export const AddCategory = () => {
 		} catch (error) {
 			setIsLoading(false);
 			console.log(error.message);
+			console.log(error);
 		}
 	};
 
@@ -87,7 +97,10 @@ export const AddCategory = () => {
 			<VStack mb={20} mt={10} space={5}>
 				<Input
 					placeholder='Name'
-					onChangeText={(value) => setForm({ ...form, name: value })}
+					onChangeText={async (value) => {
+						const id = await AsyncStorage.getItem('id');
+						setForm({ ...form, name: value, user_id: id })
+					}}
 				/>
 				<PrimaryButton
 					color='orange'
@@ -165,7 +178,7 @@ export const AddCategory = () => {
 								</Box>
 							);
 						}}
-						keyExtractor={(item) => item.id}
+						keyExtractor={(item) => item._id}
 					/>
 				)}
 			</HStack>
